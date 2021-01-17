@@ -12,4 +12,10 @@ public interface IRaceRepository extends JpaRepository<Race, Integer>, CrudRepos
 
     @Query("SELECT count(*) FROM Race e WHERE e.winConstructorId = :constructorId")
     Long countRaceWinByConstructorId(@Param("constructorId") int id);
+
+    @Query("SELECT count(*) FROM Race e WHERE e.winDriverId = :driverId")
+    Long countRaceWinByDriverId(@Param("driverId") int id);
+
+    @Query("SELECT count(*) FROM Race e WHERE e.poleDriverId = :driverId")
+    Long countPolePositionByDriverId(@Param("driverId") int id);
 }

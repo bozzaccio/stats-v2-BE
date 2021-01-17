@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import stats.dto.DriverDTO;
 import stats.entities.Driver;
 import stats.repositories.IDriverRepository;
+import stats.repositories.IRaceRepository;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -15,6 +16,9 @@ public class DriverService implements IBaseService<Driver, DriverDTO> {
 
     @Autowired
     private IDriverRepository driverRepository;
+
+    @Autowired
+    private IRaceRepository raceRepository;
 
     @Override
     public void loadData() throws IOException {
@@ -52,6 +56,10 @@ public class DriverService implements IBaseService<Driver, DriverDTO> {
         dto.setNumber(entity.getNumber());
         dto.setSurname(entity.getSurname());
         dto.setUrl(entity.getUrl());
+
+        dto.setRaceSeasonWin(raceRepository.countRaceWinByDriverId(entity.getId()).intValue());
+
+        dto.setPoleSeason(raceRepository.countPolePositionByDriverId(entity.getId()).intValue());
 
         return dto;
     }
